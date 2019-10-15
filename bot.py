@@ -10,7 +10,7 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
-TG_TOKEN = "947379327:AAGUFVQxdqdXfmid7Hsc5MJ7hhf3w3WDDIQ"
+TG_TOKEN = "your_token"
 
 
 def message_handler(bot: Bot, update: Update):
