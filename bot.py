@@ -1,16 +1,13 @@
 from telegram import Bot
 from telegram import Update
+import urllib.request, json
 from telegram.ext import Updater
 from telegram.ext import MessageHandler
 from telegram.ext import Filters
-from __future__ import print_function
-import pickle
-import os.path
-from googleapiclient.discovery import build
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
+import json, re, requests
 
-TG_TOKEN = "your_token"
+
+TG_TOKEN = "your token"
 
 
 def message_handler(bot: Bot, update: Update):
@@ -28,6 +25,25 @@ def message_handler(bot: Bot, update: Update):
         text = reply_text,
     )
 
+def anekdot(bot: Bot, update: Update):
+    user = update.effective_user
+    if user:
+        name = user.first_name
+    else:
+        name = 'Челядь'
+    
+    request = requests.get("http://rzhunemogu.ru/RandJSON.aspx?CType=1")
+    response = request.text
+    response = response.replace("\n","")
+    response = response.replace("\r","")
+    text = json.loads(response)
+
+    reply_text = f'{name}, слушай анекдот\n {text}'
+
+    bot.send_message(
+        chat_id = update.effective_message.chat_id,
+        text = reply_text,
+    ) 
 
 
 def main():
